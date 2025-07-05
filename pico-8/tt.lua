@@ -48,6 +48,7 @@ function mkRobot()
    local r = {}
    r.x = rndCoord()
    r.y = rndCoord()
+   r.exists = true
 
    r.dx = function()
       if player.x < r.x
@@ -68,12 +69,25 @@ function mkRobot()
    end
    
    r.update = function()
-      r.x += r.dx()
-      r.y += r.dy()
+      if r.exists
+      then
+         r.x += r.dx()
+         r.y += r.dy()
+      end
    end
 
    r.draw = function()
-      rect(r.x - 4, r.y - 4, r.x + 4, r.y + 4, 2)
+      if r.exists
+      then
+         rect(r.x - 4, r.y - 4, r.x + 4, r.y + 4, 2)
+      else
+         line(r.x - 4, r.y - 4, r.x + 4, r.y + 4, 2)
+         line(r.x - 4, r.y + 4, r.x + 4, r.y - 4, 2)
+      end
+   end
+
+   r.collides = function(other)
+      return r.x == other.x and r.y == other.y
    end
 
    return r
@@ -91,6 +105,22 @@ function mkSwarm(n)
       for i=0,n
       do
          swarm.robots[i].update()
+      end
+      crashed = {}
+      for i=0,n
+      do
+         for j=i+1,n
+         do
+            if swarm.robots[i].collides(swarm.robots[j])
+            then
+               crashed[#crashed + 1] = i
+               crashed[#crashed + 1] = j
+            end
+         end
+      end
+      for i, r in ipairs(crashed)
+      do
+         swarm.robots[r].exists = false
       end
    end
 
