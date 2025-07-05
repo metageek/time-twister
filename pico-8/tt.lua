@@ -1,7 +1,7 @@
 function mkPlayer()
    local p = {}
-   p.x = 32
-   p.y = 32
+   p.x = rndCoord()
+   p.y = rndCoord()
 
    p.dx = function ()
       if btn(1)
@@ -37,10 +37,14 @@ function mkPlayer()
    return p
 end
 
+function rndCoord()
+   return flr(rnd(128))
+end
+
 function mkRobot()
    local r = {}
-   r.x = 96
-   r.y = 96
+   r.x = rndCoord()
+   r.y = rndCoord()
 
    r.dx = function()
       if player.x < r.x
