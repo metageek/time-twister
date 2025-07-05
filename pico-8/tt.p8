@@ -3,13 +3,16 @@ version 42
 __lua__
 #include tt.lua
 function _init()
+  player = mkPlayer()
   r1 = mkRobot()
 end
 function _update()
+  player.update()
   r1.update()
 end
 function _draw()
   cls(7)
+  player.draw()
   r1.draw()
 end
 __gfx__
