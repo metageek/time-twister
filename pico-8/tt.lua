@@ -4,30 +4,33 @@ function mkPlayer()
    p.y = rndCoord()
 
    p.dx = function ()
-      if btn(1)
+      if btnp(1)
       then
-         return 1
-      elseif btn(0)
+         return 8
+      elseif btnp(0)
       then
-         return -1
+         return -8
       else
          return 0
       end
    end
    p.dy = function ()
-      if btn(3)
+      if btnp(3)
       then
-         return 1
-      elseif btn(2)
+         return 8
+      elseif btnp(2)
       then
-         return -1
+         return -8
       else
          return 0
       end
    end
    p.update = function()
-      p.x += p.dx()
-      p.y += p.dy()
+      local dx = p.dx()
+      local dy = p.dy()
+      p.x += dx
+      p.y += dy
+      return dx ~= 0 or dy ~= 0
    end
 
    p.draw = function()
@@ -38,7 +41,7 @@ function mkPlayer()
 end
 
 function rndCoord()
-   return flr(rnd(128))
+   return flr(rnd(16)) * 8
 end
 
 function mkRobot()
@@ -48,18 +51,18 @@ function mkRobot()
 
    r.dx = function()
       if player.x < r.x
-      then return -1
+      then return -8
       elseif player.x > r.x
-      then return 1
+      then return 8
       else return 0
       end
    end
    
    r.dy = function()
       if player.y < r.y
-      then return -1
+      then return -8
       elseif player.y > r.y
-      then return 1
+      then return 8
       else return 0
       end
    end
@@ -74,4 +77,29 @@ function mkRobot()
    end
 
    return r
+end
+
+function mkSwarm(n)
+   local swarm = { robots={} }
+
+   for i=0,n
+   do
+      swarm.robots[i] = mkRobot()
+   end
+
+   swarm.update = function()
+      for i=0,n
+      do
+         swarm.robots[i].update()
+      end
+   end
+
+   swarm.draw = function()
+      for i=0,n
+      do
+         swarm.robots[i].draw()
+      end
+   end
+
+   return swarm
 end

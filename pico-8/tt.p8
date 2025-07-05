@@ -4,16 +4,17 @@ __lua__
 #include tt.lua
 function _init()
   player = mkPlayer()
-  r1 = mkRobot()
+  swarm = mkSwarm(3)
 end
 function _update()
-  player.update()
-  r1.update()
+  if player.update()
+  then swarm.update()
+  end
 end
 function _draw()
   cls(7)
   player.draw()
-  r1.draw()
+  swarm.draw()
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
