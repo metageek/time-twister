@@ -38,6 +38,13 @@ function mkPlayer()
       if p.state ~= 0
       then return false
       end
+
+      if btnp(4)
+      then
+         p.x = rndCoord()
+         p.y = rndCoord()
+         return true
+      end
       
       local dx = p.dx()
       local dy = p.dy()
