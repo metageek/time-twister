@@ -1,7 +1,16 @@
+function say(s)
+   print(s, 64 - (#s*2), 61, 8)
+end
+
 function mkPlayer()
    local p = {}
    p.x = rndCoord()
    p.y = rndCoord()
+
+   -- 0: running
+   -- 1: won
+   -- 2: lost
+   p.state = 0
 
    p.dx = function ()
       if btnp(1)
@@ -26,6 +35,10 @@ function mkPlayer()
       end
    end
    p.update = function()
+      if p.state ~= 0
+      then return false
+      end
+      
       local dx = p.dx()
       local dy = p.dy()
       p.x += dx
@@ -34,9 +47,28 @@ function mkPlayer()
    end
 
    p.draw = function()
-      circ(p.x, p.y, 4, 1)
+      if p.state == 0
+      then circ(p.x, p.y, 4, 1)
+      elseif p.state == 1
+      then say("You won!")
+      else say("You lost.")
+      end
    end
 
+   p.win = function()
+      if p.state == 0
+      then
+         p.state = 1
+      end
+   end
+   
+   p.lose = function()
+      if p.state == 0
+      then
+         p.state = 2
+      end
+   end
+   
    return p
 end
 
@@ -96,22 +128,28 @@ end
 function mkSwarm(n)
    local swarm = { robots={} }
 
-   for i=0,n
+   swarm.numLeft = n
+   
+   for i=1,n
    do
       swarm.robots[i] = mkRobot()
    end
 
    swarm.update = function()
-      for i=0,n
+      for i=1,n
       do
          swarm.robots[i].update()
       end
       crashed = {}
-      for i=0,n
+      for i=1,n
       do
+         if swarm.robots[i].exists and swarm.robots[i].collides(player)
+         then
+            player.lose()
+         end
          for j=i+1,n
          do
-            if swarm.robots[i].collides(swarm.robots[j])
+            if swarm.robots[i].exists and swarm.robots[i].collides(swarm.robots[j])
             then
                crashed[#crashed + 1] = i
                crashed[#crashed + 1] = j
@@ -120,12 +158,21 @@ function mkSwarm(n)
       end
       for i, r in ipairs(crashed)
       do
-         swarm.robots[r].exists = false
+         if swarm.robots[r].exists
+         then
+            swarm.numLeft -= 1
+            swarm.robots[r].exists = false
+         end
+      end
+
+      if swarm.numLeft == 0
+      then
+         player.win()
       end
    end
 
    swarm.draw = function()
-      for i=0,n
+      for i=1,n
       do
          swarm.robots[i].draw()
       end
