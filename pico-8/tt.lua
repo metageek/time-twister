@@ -93,6 +93,8 @@ function mkPlayer()
    -- 1: won
    -- 2: lost
    p.state = 0
+   p.wonFlipped = true
+   p.wonFlippedTicksLeft = 15
 
    p.dx = function ()
       if btnp(1)
@@ -166,7 +168,20 @@ function mkPlayer()
       if p.state == 0
       then spr(1, p.x + 4, p.y + 4)
       elseif p.state == 1
-      then say("You won!")
+      then
+         say("You won!")
+         local xoffset = 4
+         if p.wonFlipped
+         then
+            xoffset = -4
+         end
+         spr(1, p.x + 4, p.y + 4, 1, 1, p.wonFlipped)
+         p.wonFlippedTicksLeft -= 1
+         if p.wonFlippedTicksLeft == 0
+         then
+            p.wonFlipped = not p.wonFlipped
+            p.wonFlippedTicksLeft = 15
+         end
       else say("You lost.")
       end
    end
