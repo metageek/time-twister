@@ -61,7 +61,7 @@ function mkRecordedPlayer(x0, y0, moves)
    end
 
    p.visible = function()
-      return p.i <= #p.moves
+      return p.i <= #p.moves and player.state == 0
    end
 
    p.draw = function()
