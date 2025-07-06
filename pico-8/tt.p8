@@ -3,8 +3,8 @@ version 42
 __lua__
 #include tt.lua
 function _init()
-  player = mkPlayer()
   swarm = mkSwarm(3)
+  player = mkPlayer()
 end
 function _update()
   for _, r in ipairs(recordedPlayers)

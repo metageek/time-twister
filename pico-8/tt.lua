@@ -81,9 +81,7 @@ end
 recordedPlayers = {}
 
 function mkPlayer()
-   local p = {}
-   p.x = rndCoord()
-   p.y = rndCoord()
+   local p = rndSafePos(swarm.robots)
 
    p.x0 = p.x
    p.y0 = p.y
@@ -136,8 +134,10 @@ function mkPlayer()
          recordedPlayers[#recordedPlayers + 1] = mkRecordedPlayer(p.x0, p.y0, p.moves)
          p.moves = {}
          p.ticksSinceMove = 0
-         p.x = rndCoord()
-         p.y = rndCoord()
+
+         local dest = rndSafePos(swarm.robots)
+         p.x = dest.x
+         p.y = dest.y
          p.x0 = p.x
          p.y0 = p.y
          p.updated = true
@@ -192,6 +192,32 @@ function rndCoord()
    return flr(rnd(16)) * 8
 end
 
+function rndSafePos(robots)
+   while true
+   do
+      local x = rndCoord()
+      local y = rndCoord()
+
+      local collided = false
+      for _, r in ipairs(robots)
+      do
+         local dx = r.x - x
+         local dy = r.y - y
+
+         if abs(dx) <= 1 and abs(dy) <= 1
+         then
+            collided = true
+            break
+         end
+      end
+
+      if not collided
+      then
+         return {x=x, y=y}
+      end
+   end
+end
+
 function nearestPlayer(x, y)
    -- Distances are squared
    function dist(p)
@@ -216,10 +242,8 @@ function nearestPlayer(x, y)
    return nearest
 end
 
-function mkRobot()
-   local r = {}
-   r.x = rndCoord()
-   r.y = rndCoord()
+function mkRobot(robots)
+   local r = rndSafePos(robots)
    r.exists = true
 
    r.dx = function(p)
@@ -290,7 +314,7 @@ function mkSwarm(n)
    
    for i=1,n
    do
-      swarm.robots[i] = mkRobot()
+      swarm.robots[i] = mkRobot(swarm.robots)
    end
 
    swarm.update = function()
