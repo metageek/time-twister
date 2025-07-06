@@ -368,6 +368,7 @@ function mkSwarm(n)
          if swarm.robots[r].exists
          then
             swarm.numLeft -= 1
+            score += 1
             swarm.robots[r].exists = false
          end
       end

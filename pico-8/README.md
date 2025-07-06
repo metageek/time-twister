@@ -13,6 +13,7 @@ So far I've got:
  * When all the robots are gone, the player wins, and does a little dance.
  * When a robot reaches the player, the player loses, and leaves a corpse.
  * When a robot reaches a ghost, the ghost vanishes.
+ * Score displayed: # of robots destroyed.
 
 Things I should do:
 
@@ -20,7 +21,6 @@ Things I should do:
  * Make the corpse more visible.
  * When all the robots are gone, start a new level.
    * More robots.
- * Keep score: # of robots destroyed.
 
 Open questions:
 

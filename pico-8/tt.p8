@@ -2,8 +2,10 @@ pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
 #include tt.lua
+level = 3
+score = 0
 function _init()
-  swarm = mkSwarm(3)
+  swarm = mkSwarm(level)
   player = mkPlayer()
 end
 function _update()
@@ -27,6 +29,9 @@ function _draw()
   end
   swarm.draw()
   player.draw()
+
+  local s = tostr(score)
+  print(s, 64 - (#s*2), 0, 8)
 end
 __gfx__
 0000000000bbb0000008000000666000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
