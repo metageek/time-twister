@@ -164,7 +164,7 @@ function mkPlayer()
 
    p.draw = function()
       if p.state == 0
-      then circ(p.x, p.y, 4, 1)
+      then spr(1, p.x - 4, p.y - 4)
       elseif p.state == 1
       then say("You won!")
       else say("You lost.")
@@ -265,19 +265,21 @@ function mkRobot(robots)
    end
    
    r.update = function()
-      local p = nearestPlayer(r.x, r.y)
+      r.p = nearestPlayer(r.x, r.y)
       
-      if p.updated and r.exists
+      if r.p.updated and r.exists
       then
-         r.x += r.dx(p)
-         r.y += r.dy(p)
+         r.x += r.dx(r.p)
+         r.y += r.dy(r.p)
       end
    end
 
    r.draw = function()
       if r.exists
       then
-         rect(r.x - 4, r.y - 4, r.x + 4, r.y + 4, 2)
+         local flipped = r.p.x < r.x
+
+         spr(2, r.x - 4, r.y - 4, 1, 1, flipped)
       else
          line(r.x - 4, r.y - 4, r.x + 4, r.y + 4, 2)
          line(r.x - 4, r.y + 4, r.x + 4, r.y - 4, 2)
