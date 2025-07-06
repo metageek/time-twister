@@ -67,7 +67,7 @@ function mkRecordedPlayer(x0, y0, moves)
    p.draw = function()
       if p.visible()
       then
-         spr(3, p.x - 4, p.y - 4)
+         spr(3, p.x + 4, p.y + 4)
       end
    end
 
@@ -155,8 +155,8 @@ function mkPlayer()
 
       p.recordMove(dx, dy)
 
-      p.x = min(max(p.x + dx, 0), 120)
-      p.y = min(max(p.y + dy, 0), 120)
+      p.x = min(max(p.x + dx, 8), 112)
+      p.y = min(max(p.y + dy, 8), 112)
 
       p.updated = true
       return
@@ -164,7 +164,7 @@ function mkPlayer()
 
    p.draw = function()
       if p.state == 0
-      then spr(1, p.x - 4, p.y - 4)
+      then spr(1, p.x + 4, p.y + 4)
       elseif p.state == 1
       then say("You won!")
       else say("You lost.")
@@ -279,9 +279,9 @@ function mkRobot(robots)
       if r.exists
       then
 
-         spr(2, r.x - 4, r.y - 4, 1, 1, flipped)
+         spr(2, r.x + 4, r.y + 4, 1, 1, flipped)
       else
-         spr(4, r.x - 4, r.y - 4, 1, 1, flipped)
+         spr(4, r.x + 4, r.y + 4, 1, 1, flipped)
       end
    end
 
