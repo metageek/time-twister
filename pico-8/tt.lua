@@ -275,14 +275,13 @@ function mkRobot(robots)
    end
 
    r.draw = function()
+      local flipped = r.p.x < r.x
       if r.exists
       then
-         local flipped = r.p.x < r.x
 
          spr(2, r.x - 4, r.y - 4, 1, 1, flipped)
       else
-         line(r.x - 4, r.y - 4, r.x + 4, r.y + 4, 2)
-         line(r.x - 4, r.y + 4, r.x + 4, r.y - 4, 2)
+         spr(4, r.x - 4, r.y - 4, 1, 1, flipped)
       end
    end
 
