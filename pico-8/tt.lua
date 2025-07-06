@@ -144,6 +144,12 @@ function mkPlayer()
          p.moves = {}
          p.ticksSinceMove = 0
 
+         for _, r in ipairs(swarm.robots)
+         do
+            r.x = r.x0
+            r.y = r.y0
+         end
+
          local dest = rndSafePos(swarm.robots)
          p.x = dest.x
          p.y = dest.y
@@ -275,6 +281,9 @@ end
 function mkRobot(robots)
    local r = rndSafePos(robots)
    r.exists = true
+
+   r.x0 = r.x
+   r.y0 = r.y
 
    r.dx = function(p)
       if p.x < r.x
