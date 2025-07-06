@@ -9,7 +9,10 @@ end
 function _update()
   for _, r in ipairs(recordedPlayers)
   do
-    r.update()
+    if r ~= nil
+    then
+      r.update()
+    end
   end
   player.update()
   swarm.update()
@@ -18,7 +21,9 @@ function _draw()
   cls(7)
   for _, r in ipairs(recordedPlayers)
   do
-    r.draw()
+    if r ~= nil
+    then r.draw()
+    end
   end
   player.draw()
   swarm.draw()

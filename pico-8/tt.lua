@@ -43,6 +43,12 @@ function mkRecordedPlayer(x0, y0, moves)
    end
 
    p.update = function()
+      if player.state ~= 0
+      then
+         p.updated = false
+         return
+      end
+      
       local m = p.step()
       if m ~= nil
       then
@@ -62,8 +68,11 @@ function mkRecordedPlayer(x0, y0, moves)
       if p.visible()
       then
          circ(p.x, p.y, 4, 6)
-         --say(tostr(p.moves[p.i].count) .. tostr(p.i))
       end
+   end
+
+   p.lose = function()
+      p.i = #p.moves + 1
    end
    
    return p
@@ -166,7 +175,6 @@ function mkPlayer()
       if p.state == 0
       then
          p.state = 1
-         recordedPlayers = {}
       end
    end
    
@@ -174,7 +182,6 @@ function mkPlayer()
       if p.state == 0
       then
          p.state = 2
-         recordedPlayers = {}
       end
    end
    
@@ -260,10 +267,26 @@ function mkRobot()
    return r
 end
 
+function allPlayers()
+   local i = nil
+   local n = #recordedPlayers
+   return function()
+      if i == nil
+      then
+         i = 0
+         return player
+      else
+         i += 1
+         if i <= n then return recordedPlayers[i] end
+      end
+   end
+end
+
 function mkSwarm(n)
    local swarm = { robots={} }
 
    swarm.numLeft = n
+   swarm.msg = ""
    
    for i=1,n
    do
@@ -274,14 +297,20 @@ function mkSwarm(n)
       for i=1,n
       do
          swarm.robots[i].update()
+         swarm.msg = tostr(#recordedPlayers)
+         for p in allPlayers()
+         do
+            if swarm.robots[i].exists and swarm.robots[i].collides(p)
+            then
+               p.lose()
+            end
+         end
       end
+      
       crashed = {}
+
       for i=1,n
       do
-         if swarm.robots[i].exists and swarm.robots[i].collides(player)
-         then
-            player.lose()
-         end
          for j=1,n
          do
             if i ~= j and swarm.robots[i].exists and swarm.robots[i].collides(swarm.robots[j])
@@ -291,6 +320,7 @@ function mkSwarm(n)
             end
          end
       end
+
       for i, r in ipairs(crashed)
       do
          if swarm.robots[r].exists
