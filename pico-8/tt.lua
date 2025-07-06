@@ -2,6 +2,12 @@ function say(s)
    print(s, 64 - (#s*2), 61, 8)
 end
 
+function setup()
+  level += 1
+  swarm = mkSwarm(1 + 2 * level)
+  player = mkPlayer()
+end
+
 function mkMove(dx, dy, count)
    local m = {dx = dx, dy = dy, count = count}
 
@@ -95,6 +101,7 @@ function mkPlayer()
    p.state = 0
    p.wonFlipped = true
    p.wonFlippedTicksLeft = 15
+   p.wonDanceStepsLeft = 6
 
    p.dx = function ()
       if btnp(1)
@@ -169,7 +176,7 @@ function mkPlayer()
       then spr(1, p.x + 4, p.y + 4)
       elseif p.state == 1
       then
-         say("You won!")
+         say("You won level " .. tostr(level) .. "!")
          local xoffset = 4
          if p.wonFlipped
          then
@@ -179,8 +186,14 @@ function mkPlayer()
          p.wonFlippedTicksLeft -= 1
          if p.wonFlippedTicksLeft == 0
          then
-            p.wonFlipped = not p.wonFlipped
-            p.wonFlippedTicksLeft = 15
+            p.wonDanceStepsLeft -= 1
+            if p.wonDanceStepsLeft == 0
+            then
+               _init()
+            else
+               p.wonFlipped = not p.wonFlipped
+               p.wonFlippedTicksLeft = 15
+            end
          end
       else
          say("You lost.")

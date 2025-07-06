@@ -14,13 +14,13 @@ So far I've got:
  * When a robot reaches the player, the player loses, and leaves a corpse.
  * When a robot reaches a ghost, the ghost vanishes.
  * Score displayed: # of robots destroyed.
+ * When all the robots are gone, start a new level.
+   * More robots.
 
 Things I should do:
 
  * Fix the logic that prevents the player from teleporting onto a robot.
  * Make the corpse more visible.
- * When all the robots are gone, start a new level.
-   * More robots.
 
 Open questions:
 

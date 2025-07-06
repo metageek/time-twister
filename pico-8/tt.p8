@@ -2,11 +2,10 @@ pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
 #include tt.lua
-level = 3
+level = 0
 score = 0
 function _init()
-  swarm = mkSwarm(level)
-  player = mkPlayer()
+  setup()
 end
 function _update()
   for _, r in ipairs(recordedPlayers)
@@ -30,8 +29,11 @@ function _draw()
   swarm.draw()
   player.draw()
 
+  local l = "level " .. tostr(level)
+  print(l, 8, 0, 8)
+  
   local s = tostr(score)
-  print(s, 64 - (#s*2), 0, 8)
+  print(s, 120 - (#s*2), 0, 8)
 end
 __gfx__
 0000000000bbb0000008000000666000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
