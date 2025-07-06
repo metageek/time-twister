@@ -67,7 +67,7 @@ function mkRecordedPlayer(x0, y0, moves)
    p.draw = function()
       if p.visible()
       then
-         circ(p.x, p.y, 4, 6)
+         spr(3, p.x - 4, p.y - 4)
       end
    end
 
