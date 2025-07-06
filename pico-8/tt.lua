@@ -48,8 +48,10 @@ function mkPlayer()
       
       local dx = p.dx()
       local dy = p.dy()
-      p.x += dx
-      p.y += dy
+
+      p.x = min(max(p.x + dx, 0), 120)
+      p.y = min(max(p.y + dy, 0), 120)
+
       return dx ~= 0 or dy ~= 0
    end
 
@@ -154,9 +156,9 @@ function mkSwarm(n)
          then
             player.lose()
          end
-         for j=i+1,n
+         for j=1,n
          do
-            if swarm.robots[i].exists and swarm.robots[i].collides(swarm.robots[j])
+            if i ~= j and swarm.robots[i].exists and swarm.robots[i].collides(swarm.robots[j])
             then
                crashed[#crashed + 1] = i
                crashed[#crashed + 1] = j
