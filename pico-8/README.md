@@ -25,3 +25,5 @@ Things I should do:
 Open questions:
 
  * Should the robots reset when time resets after a teleport?
+   * Experimented on branch experiment/robots-reset
+   * Answer seems to be no; it's frustrating having work lost on teleport.
