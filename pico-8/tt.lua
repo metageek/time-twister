@@ -173,16 +173,18 @@ function mkPlayer()
          local xoffset = 4
          if p.wonFlipped
          then
-            xoffset = -4
+            xoffset = 0
          end
-         spr(1, p.x + 4, p.y + 4, 1, 1, p.wonFlipped)
+         spr(1, p.x + xoffset, p.y + 4)
          p.wonFlippedTicksLeft -= 1
          if p.wonFlippedTicksLeft == 0
          then
             p.wonFlipped = not p.wonFlipped
             p.wonFlippedTicksLeft = 15
          end
-      else say("You lost.")
+      else
+         say("You lost.")
+         spr(5,p.x + 4, p.y + 4)
       end
    end
 
