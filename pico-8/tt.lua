@@ -2,10 +2,85 @@ function say(s)
    print(s, 64 - (#s*2), 61, 8)
 end
 
+function mkMove(dx, dy, count)
+   local m = {dx = dx, dy = dy, count = count}
+
+   m.step = function()
+      if m.count > 1
+      then
+         m.count -= 1
+         return nil
+      else
+         m.count = 0
+         return m
+      end
+   end
+
+   return m
+end
+
+function mkRecordedPlayer(x0, y0, moves)
+   local p = {}
+   p.x = x0
+   p.y = y0
+   p.moves = moves
+   p.i = 1
+
+   p.step = function()
+      if p.i > #p.moves
+      then
+         return nil
+      end
+
+      local m = p.moves[p.i].step()
+      if m == nil
+      then
+         return nil
+      end
+
+      p.i += 1
+      return m
+   end
+
+   p.update = function()
+      local m = p.step()
+      if m ~= nil
+      then
+         p.x += m.dx
+         p.y += m.dy
+         p.updated = true
+      else
+         p.updated = false
+      end
+   end
+
+   p.visible = function()
+      return p.i <= #p.moves
+   end
+
+   p.draw = function()
+      if p.visible()
+      then
+         circ(p.x, p.y, 4, 6)
+         --say(tostr(p.moves[p.i].count) .. tostr(p.i))
+      end
+   end
+   
+   return p
+end
+
+recordedPlayers = {}
+
 function mkPlayer()
    local p = {}
    p.x = rndCoord()
    p.y = rndCoord()
+
+   p.x0 = p.x
+   p.y0 = p.y
+   
+   p.moves = {}
+   p.ticksSinceMove = 0
 
    -- 0: running
    -- 1: won
@@ -34,25 +109,48 @@ function mkPlayer()
          return 0
       end
    end
+
+   p.recordMove = function(dx, dy)
+      local m = mkMove(dx, dy, p.ticksSinceMove)
+      p.ticksSinceMove = 0
+      p.moves[#p.moves + 1] = m
+   end
+   
    p.update = function()
+      p.updated = false
       if p.state ~= 0
-      then return false
+      then return
       end
 
       if btnp(4)
       then
+         recordedPlayers[#recordedPlayers + 1] = mkRecordedPlayer(p.x0, p.y0, p.moves)
+         p.moves = {}
+         p.ticksSinceMove = 0
          p.x = rndCoord()
          p.y = rndCoord()
-         return true
+         p.x0 = p.x
+         p.y0 = p.y
+         p.updated = true
+         return
       end
-      
+
       local dx = p.dx()
       local dy = p.dy()
+
+      if dx == 0 and dy == 0
+      then
+         p.ticksSinceMove += 1
+         return
+      end
+
+      p.recordMove(dx, dy)
 
       p.x = min(max(p.x + dx, 0), 120)
       p.y = min(max(p.y + dy, 0), 120)
 
-      return dx ~= 0 or dy ~= 0
+      p.updated = true
+      return
    end
 
    p.draw = function()
@@ -68,6 +166,7 @@ function mkPlayer()
       if p.state == 0
       then
          p.state = 1
+         recordedPlayers = {}
       end
    end
    
@@ -75,6 +174,7 @@ function mkPlayer()
       if p.state == 0
       then
          p.state = 2
+         recordedPlayers = {}
       end
    end
    
@@ -85,35 +185,61 @@ function rndCoord()
    return flr(rnd(16)) * 8
 end
 
+function nearestPlayer(x, y)
+   -- Distances are squared
+   function dist(p)
+      return (p.x - x) * (p.x - x) + (p.y - y) * (p.y - y)
+   end
+   
+   local nearest = player
+   local nearestDist = dist(nearest)
+   for _, r in ipairs(recordedPlayers)
+   do
+      if r.visible()
+      then
+         d = dist(r)
+         if d < nearestDist
+         then
+            nearest = r
+            nearestDist = d
+         end
+      end
+   end
+
+   return nearest
+end
+
 function mkRobot()
    local r = {}
    r.x = rndCoord()
    r.y = rndCoord()
    r.exists = true
 
-   r.dx = function()
-      if player.x < r.x
+   r.dx = function(p)
+      if p.x < r.x
       then return -8
-      elseif player.x > r.x
+      elseif p.x > r.x
       then return 8
       else return 0
       end
    end
    
-   r.dy = function()
-      if player.y < r.y
+   r.dy = function(p)
+      if p.y < r.y
       then return -8
-      elseif player.y > r.y
+      elseif p.y > r.y
       then return 8
       else return 0
       end
    end
    
    r.update = function()
-      if r.exists
+      local p = nearestPlayer(r.x, r.y)
+      
+      if p.updated and r.exists
       then
-         r.x += r.dx()
-         r.y += r.dy()
+         r.x += r.dx(p)
+         r.y += r.dy(p)
       end
    end
 

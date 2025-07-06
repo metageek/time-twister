@@ -7,12 +7,19 @@ function _init()
   swarm = mkSwarm(3)
 end
 function _update()
-  if player.update()
-  then swarm.update()
+  for _, r in ipairs(recordedPlayers)
+  do
+    r.update()
   end
+  player.update()
+  swarm.update()
 end
 function _draw()
   cls(7)
+  for _, r in ipairs(recordedPlayers)
+  do
+    r.draw()
+  end
   player.draw()
   swarm.draw()
 end
