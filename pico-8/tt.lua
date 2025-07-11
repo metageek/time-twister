@@ -54,7 +54,7 @@ function mkRecordedPlayer(x0, y0, moves)
          p.updated = false
          return
       end
-      
+
       local m = p.step()
       if m ~= nil
       then
@@ -80,7 +80,7 @@ function mkRecordedPlayer(x0, y0, moves)
    p.lose = function()
       p.i = #p.moves + 1
    end
-   
+
    return p
 end
 
@@ -91,7 +91,7 @@ function mkPlayer()
 
    p.x0 = p.x
    p.y0 = p.y
-   
+
    p.moves = {}
    p.ticksSinceMove = 0
 
@@ -102,6 +102,9 @@ function mkPlayer()
    p.wonFlipped = true
    p.wonFlippedTicksLeft = 15
    p.wonDanceStepsLeft = 6
+   p.runningTeleporting = false
+   p.runningTeleportFrames = 0
+   p.teleportedFrom = nil
 
    p.dx = function ()
       if btnp(1)
@@ -131,7 +134,7 @@ function mkPlayer()
       p.ticksSinceMove = 0
       p.moves[#p.moves + 1] = m
    end
-   
+
    p.update = function()
       p.updated = false
       if p.state ~= 0
@@ -143,6 +146,10 @@ function mkPlayer()
          recordedPlayers[#recordedPlayers + 1] = mkRecordedPlayer(p.x0, p.y0, p.moves)
          p.moves = {}
          p.ticksSinceMove = 0
+
+         p.runningTeleporting = true
+         p.teleportedFrom = { x = p.x+ 4, y = p.y + 4}
+         p.runningTeleportFrames = 0
 
          local dest = rndSafePos(swarm.robots)
          p.x = dest.x
@@ -171,9 +178,55 @@ function mkPlayer()
       return
    end
 
+   p.spiral = function ()
+      local x = 0
+      local y = 0
+      local steps = 0
+      if p.runningTeleportFrames >= 15
+      then
+         x = p.x
+         y = p.y
+         steps = 30 - p.runningTeleportFrames
+      else
+         x = p.teleportedFrom.x
+         y = p.teleportedFrom.y
+         steps = p.runningTeleportFrames
+      end
+
+      local dth = 30 / 360
+      local th = dth
+      local ds = 1
+      local s = ds
+
+
+      for i = 0, steps
+      do
+         local newx = x + s * cos(th)
+         local newy = y + s * sin(th)
+
+         line(x, y, newx, newy, 3)
+
+         s += ds
+         th += dth
+         x = newx
+         y = newy
+      end
+   end
+
    p.draw = function()
       if p.state == 0
-      then spr(1, p.x + 4, p.y + 4)
+      then
+         if p.runningTeleporting
+         then
+            p.spiral()
+            p.runningTeleportFrames += 1
+            if p.runningTeleportFrames == 30
+            then
+               p.runningTeleporting = false
+            end
+         else
+            spr(1, p.x + 4, p.y + 4)
+         end
       elseif p.state == 1
       then
          say("You won level " .. tostr(level) .. "!")
@@ -207,14 +260,14 @@ function mkPlayer()
          p.state = 1
       end
    end
-   
+
    p.lose = function()
       if p.state == 0
       then
          p.state = 2
       end
    end
-   
+
    return p
 end
 
@@ -253,7 +306,7 @@ function nearestPlayer(x, y)
    function dist(p)
       return (p.x - x) * (p.x - x) + (p.y - y) * (p.y - y)
    end
-   
+
    local nearest = player
    local nearestDist = dist(nearest)
    for _, r in ipairs(recordedPlayers)
@@ -284,7 +337,7 @@ function mkRobot(robots)
       else return 0
       end
    end
-   
+
    r.dy = function(p)
       if p.y < r.y
       then return -8
@@ -293,10 +346,10 @@ function mkRobot(robots)
       else return 0
       end
    end
-   
+
    r.update = function()
       r.p = nearestPlayer(r.x, r.y)
-      
+
       if r.p.updated and r.exists
       then
          r.x += r.dx(r.p)
@@ -342,7 +395,7 @@ function mkSwarm(n)
 
    swarm.numLeft = n
    swarm.msg = ""
-   
+
    for i=1,n
    do
       swarm.robots[i] = mkRobot(swarm.robots)
@@ -361,7 +414,7 @@ function mkSwarm(n)
             end
          end
       end
-      
+
       crashed = {}
 
       for i=1,n
