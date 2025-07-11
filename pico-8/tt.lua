@@ -276,27 +276,30 @@ function rndCoord()
 end
 
 function rndSafePos(robots)
-   while true
-   do
+   function try()
       local x = rndCoord()
       local y = rndCoord()
 
-      local collided = false
       for _, r in ipairs(robots)
       do
          local dx = r.x - x
          local dy = r.y - y
 
-         if abs(dx) <= 1 and abs(dy) <= 1
+         if abs(dx) <= 8 and abs(dy) <= 8
          then
-            collided = true
-            break
+            return nil
          end
       end
 
-      if not collided
+      return {x = x, y = y}
+   end
+
+   while true
+   do
+      local pos = try()
+      if pos ~= nil
       then
-         return {x=x, y=y}
+         return pos
       end
    end
 end
