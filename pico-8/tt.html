@@ -1,5 +1,5 @@
 ﻿<html><head>
-<title>PICO-8 Cartridge</title>
+<title>Time Twister</title>
 <meta name="viewport" content="width=device-width, user-scalable=no">
 <script type="text/javascript">
 
@@ -982,7 +982,7 @@ canvas{
 
 .p8_start_button{
 	cursor:pointer;
-	background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAIAAABMXPacAAAEE0lEQVR4Ae2dMW6jQBSG37KWy5Tb5ARwgEiJIu2eYKhc0EfKFaaz0nETanODvQR9DrClm1RbzJggzDhADDPg79fIsh8jPPPe/97X/tzF97uX1z/PT3+en379e9+9vJrPvw/v+982/vfhXR7v5PFu/9vG689W3Oxvruae86fny/z7+XmWEnfd2rU/EhERqQ6FiCRpZn6ea7/N9tuOp654/w2dcp1nKXFz8T73sgX48nVvH0VnplzxoXvWV4YLt27uj1yvu1DP5qv7uHtQByzX9a28tW7t2h9ddn2d6/q7eW/99s49rpfcyPDp7ADX/k39OEmz5uNmAVvFrH9e2DPO/s3jts6zrLjr1uf7+zLAi1bTDVdgwGxaDQN63uvHLr6vn5kGMZ+BNEFYykvRanQ3d+bZjqDQhk9YST+tKj5KXl53qAbNgCCklV3TsC04BgTbB1V8FJHRTeDKc4Tr55ErzzBggP1trr5BAhgQXDfAgJnkyvOmOhRJmuH6S9IqaUXSMa7vzDMM8IxiGAADbpsBEa73NXxgAAygDDAABsAAhg8MgAEwAAbAAMoAA2AADIABMADBABhAjmAADEAwAAagNTEgL3G9PwbkZRUfJS8/F2XwwwCt7KIb5mOAsb+IbQIY4IcBty1/DDjZ3/7RDTdBGAxAHhiA3AzYVIciSbMJXa9V0oqkN+r6zjxPzwAEA2AAcjIgwvW+hg8MgAGUAQbAABjA8IEBMAAGwAAYQBlgAAyAATAABiAYAAPIEQyAAQgGwAAEA4JSXsIAH0k/rSo+fqcGMGCUtLILBvjtgyo+isjoJoABngUDrmB/m6tvkAAGBNcNMGAmufK8qQ5Fkma4/pK0SlqRdIzrO/MMAzyjGAbAgNtmQITrfQ0fGAADKAMM8M6ATXUokjQLzfVvH9YE++1K2tGVZxgAA7pkjL8a+18ow6ZzNvmtQT1/zJd1lMGV5xAZYDL+9lGsqQNgAAwYOIX226yeRSsuQ9Q5m0LIvplFq6mBK8/R167PSy8MOP++suHTjwF5WcVHycvPhfwwQCu70HwMMPYXsU2A/DAA+WHAyf52A03gmQHIAwPQ9AzYVIciSbMO12uVtCJpv7/KS9FqGVmZ8aiuPLsZMPZKlhb1CjDppzU/2GZkgFZ2haYADjYZA4ynROZ3VvhHdeU5uqbr0ZDhc20GnDxlXxhyE/g76owMQB4YgIYzYFMdiiTNruB6rZJWJJ1whohWyzhqI92deb4eA6Yf3PUKGjCrZYBWdsEAv31QxUcRWVwTuPIcLWD4rEKuPC+HAQ372zMvkARLZsBKu2FpDFisBjOgWQbzvfnpJ65VkmbmqPbAWoV4Tnd8MAOITx3vxQDi08WdDCA+T/wLBhCfOg4DYAAMIB0e4/8B1QHaDdvpS3oAAAAQdEVYdExvZGVQTkcAMjAxMTAyMjHjWbbBAAAAAElFTkSuQmCC");
+	background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAIAAABMXPacAAAEiElEQVR4Ae2dMW7jMBBFZ7VCypTb5ATiAQJsECA5AVm5UB8gV2BnpNNNVEs3yCXY5wBbqkm1CEjLWkm05azFoaQ/GAjOmFDMP3/mtT932d3u5fX58eH58eHXn4/dy6t9vt9/7J9c/f3+g37f0u/b/ZOrt89e3Z7vZvf88Nth2v8+/D1LqVtN7GW7+vjOJ0RERKYqiUio3P45jP1Nvr8Z+dZX/8/w/Z746z01evoMz7sGnG3D22c5qpSvfumZlbWhe/fh9bvnE9/rhk4fFfSs/S8dkeXKPdSte3ff+WRi99rP9o3te0fPbHP5dN3ZPltBfOfT9muhct8uG+61s2dODNDENvR+z1LqpzUZnp/KAJZYAQPO3msqA4LFmhgw5V4/dtld+50dEPuMZAhWE11Vuzq7FRTb8llxG3o6R82ALbQhOgasNXw6J3A91/L5ZwWhDWAAGAAGgAGxRFGDARyiH9JkzRw9AANOhpYuwQDeOTBZQ0RXHwIwgDnAgAvs7zSZgQRgQHTTAAYECp/OqalKoXK4/msFaSl6FXVN14/qDAYwoxgMAAO2zYAErudaPmAAGIA2gAHsDEhNVQqVn3J9UZOWC73226cz0/6Geax9Op9jQFGbrPnqQZsIHgZo6XJRYY3Pbv8TbUhHd5MrWvsTmawRC1xE7f6xH3jb4NN5AgMWG1bxt88yhgm4nAEH+7sDlgQINgYsM6z9210UYRuS0d20JvXtLmLvgU9nPwO0FL2KWiQDhp8XwgAEGLCFNqyZAVGFT+cErudaPmAAGIA2gAFgAFFRgwF8y6eoTdZQUR8TDOCZBi1dggHhGGDtT+SGAAxAbIkBB/u7H7CBIYibAVudBlYGbCl8OqemKoXKGVyvpehV1MpdP6ozHwOAYjAADAADKIHruZYPGAAGoA1gABgABmD5gAFgABgABoABaAMYAAaAAWBA0ChqMIBD9EOarAnZAzCAvhqgpUswgHcOTNYQUbAhAAOYAwwYsb+7e0ASgAHRTcNWGRA8fDqnpiqFykO4vqhJyyjeo6XoVVQI14/qHIoBdu0W9TF53xMNioMzQEuXkbxnEwywtiVy5mV/T0wMSEK4HuHfLvMz4GBb94++bd5rvWfrDEAwMADhZ0BqqlKofEbXayl6FcX6nmnrjrS8uutHdZ6fAUuJom5zPsCAAacmzCUYwDsHJmuI6OpD4NM5wfIJEz6dwYAR+ztNZiABGBDdNIABgcKnc2qqUqh8za4vatJy0kktRa+irun6UZ3XzgC71ov6mJGheDMM0NIlGBDa/kRuCKJkQLJm18cUPp3Xy4CD/d0FIxiCbTMg1mlYNQNiCp/OqalKofIQri9q0jLcjbUUvYpidv2ozqEYYDdyUR8TKOZhgJYuwYBwDLD2J3JDAAZ0dE5CuB7h3y7zM+Bgf/ePNjwEcTAAwcAAhJ8BqalKofIZXa+l6FXURl0/qvP8DECAAWAAwsuABK7nWj5gABiANoAB8TKg2wb7uftE/Xv1ixmA+tz1SQxAfb66lwGoh6mfYQDqc9fBADAADIAcjPW/AKsgxDYkyJUAAAAQdEVYdExvZGVQTkcAMjAxMTAyMjHjWbbBAAAAAElFTkSuQmCC");
 	-repeat center;
 	-webkit-background-size:cover; -moz-background-size:cover; -o-background-size:cover; background-size:cover;
 }
@@ -1010,9 +1010,15 @@ canvas{
 <body style="padding:0px; margin:0px; background-color:#222; color:#ccc">
 <div id="body_0"> <!-- hide this when playing in mobile (p8_touch_detected) so that elements don't affect layout -->
 
-
 <!-- Add any content above the cart here -->
 
+<h1>Time Twister</h1>
+<p style="font-size:12">Move with the arrows, teleport with the Z key, avoid the
+  robots. Teleportation takes you back in time, sort of, so that a
+  ghost player appears and makes the moves you did. Each robot chases
+  the nearest player (either you or a ghost). Once you get killed, you
+  can press the X key to start a new game.
+</p>
 
 <div id="p8_frame_0" style="max-width:800px; max-height:800px; margin:auto;"> <!-- double function: limit size, and display only this div for touch devices -->
 <div id="p8_frame" style="display:flex; width:100%; max-width:95vw; height:100vw; max-height:95vh; margin:auto;">

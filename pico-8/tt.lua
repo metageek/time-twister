@@ -1,3 +1,4 @@
+--Copyright 2025 John Stracke. Licensed under the GPLv3.
 function say(s)
    print(s, 64 - (#s*2), 61, 11)
 end

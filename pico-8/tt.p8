@@ -3,6 +3,7 @@ version 42
 __lua__
 --time twister
 --by metageek
+--Copyright 2025 John Stracke. Licensed under the GPLv3.
 #include tt.lua
 function _init()
   level = 0
