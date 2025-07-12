@@ -19,6 +19,9 @@ So far I've got:
  * Fix the logic that prevents the player from teleporting onto a robot.
  * Make the corpse more visible (animation on death).
  * Show an animation for teleporting.
+ * Sound effects.
+ * Restarting with button 5.
+ * Border so you can see where the edge of the arena is.
 
 Open questions:
 
