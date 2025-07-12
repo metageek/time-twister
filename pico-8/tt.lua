@@ -163,6 +163,7 @@ function mkPlayer()
          p.x0 = p.x
          p.y0 = p.y
          p.updated = true
+         sfx(3)
          return
       end
 
