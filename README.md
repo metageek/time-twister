@@ -11,3 +11,6 @@ for the time travel part. Daleks seemed like it was inspired by the
 game Chase, in _More Basic Computer Games_, published by David H. Ahl
 in 1979. Time Twister is copyright ⓒ 2025 John Stracke, licensed under
 the GPLv3.
+
+The game can be played in a browser at
+https://www.thibault.org/time-twister/
