@@ -2,9 +2,9 @@ pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
 #include tt.lua
-level = 0
-score = 0
 function _init()
+  level = 0
+  score = 0
   setup()
   sfx(1)
 end

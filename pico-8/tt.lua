@@ -138,6 +138,11 @@ function mkPlayer()
 
    p.update = function()
       p.updated = false
+      if p.state == 2 and btn(5)
+      then
+         _init()
+         return
+      end
       if p.state ~= 0
       then return
       end
