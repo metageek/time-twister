@@ -30,10 +30,10 @@ function _draw()
   player.draw()
 
   local l = "level " .. tostr(level)
-  print(l, 8, 0, 8)
+  print(l, 8, 0, 11)
   
   local s = tostr(score)
-  print(s, 120 - (#s*2), 0, 8)
+  print(s, 120 - (#s*2), 0, 11)
 end
 __gfx__
 0000000000bbb0000008000000666000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

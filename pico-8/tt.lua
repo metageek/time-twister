@@ -1,5 +1,5 @@
 function say(s)
-   print(s, 64 - (#s*2), 61, 8)
+   print(s, 64 - (#s*2), 61, 11)
 end
 
 function setup()
