@@ -16,11 +16,9 @@ So far I've got:
  * Score displayed: # of robots destroyed.
  * When all the robots are gone, start a new level.
    * More robots.
-
-Things I should do:
-
  * Fix the logic that prevents the player from teleporting onto a robot.
- * Make the corpse more visible.
+ * Make the corpse more visible (animation on death).
+ * Show an animation for teleporting.
 
 Open questions:
 

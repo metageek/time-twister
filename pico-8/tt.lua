@@ -195,7 +195,7 @@ function mkPlayer()
       end
 
       local dth = 30 / 360
-      local th = dth
+      local th = dth + (steps / 15)
       local ds = 1
       local s = ds
 
