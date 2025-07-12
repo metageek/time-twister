@@ -226,7 +226,7 @@ function mkPlayer()
                p.runningTeleporting = false
             end
          else
-            spr(1, p.x + 4, p.y + 4)
+            spr(1, p.x, p.y)
          end
       elseif p.state == 1
       then
@@ -236,14 +236,14 @@ function mkPlayer()
          then
             xoffset = 0
          end
-         spr(1, p.x + xoffset, p.y + 4)
+         spr(1, p.x + xoffset, p.y)
          p.wonFlippedTicksLeft -= 1
          if p.wonFlippedTicksLeft == 0
          then
             p.wonDanceStepsLeft -= 1
             if p.wonDanceStepsLeft == 0
             then
-               _init()
+               setup()
             else
                p.wonFlipped = not p.wonFlipped
                p.wonFlippedTicksLeft = 15
@@ -256,7 +256,7 @@ function mkPlayer()
          if t % 2 == 1 and t < 10
          then s = 1
          end
-         spr(s,p.x + 4, p.y + 4)
+         spr(s,p.x, p.y)
          p.ticksSinceLost += 1
       end
    end
@@ -265,6 +265,7 @@ function mkPlayer()
       if p.state == 0
       then
          p.state = 1
+         sfx(1)
       end
    end
 
@@ -273,6 +274,7 @@ function mkPlayer()
       then
          p.state = 2
          p.ticksSinceLost = 0
+         sfx(2)
       end
    end
 
@@ -280,7 +282,7 @@ function mkPlayer()
 end
 
 function rndCoord()
-   return flr(rnd(16)) * 8
+   return flr(rnd(14)) * 8 + 8
 end
 
 function rndSafePos(robots)
@@ -365,6 +367,8 @@ function mkRobot(robots)
       then
          r.x += r.dx(r.p)
          r.y += r.dy(r.p)
+         r.x = min(max(r.x, 8), 112)
+         r.y = min(max(r.y, 8), 112)
       end
    end
 
@@ -373,9 +377,9 @@ function mkRobot(robots)
       if r.exists
       then
 
-         spr(2, r.x + 4, r.y + 4, 1, 1, flipped)
+         spr(2, r.x, r.y, 1, 1, flipped)
       else
-         spr(4, r.x + 4, r.y + 4, 1, 1, flipped)
+         spr(4, r.x, r.y, 1, 1, flipped)
       end
    end
 
