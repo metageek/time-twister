@@ -105,6 +105,7 @@ function mkPlayer()
    p.runningTeleporting = false
    p.runningTeleportFrames = 0
    p.teleportedFrom = nil
+   p.ticksSinceLost = nil
 
    p.dx = function ()
       if btnp(1)
@@ -249,8 +250,14 @@ function mkPlayer()
             end
          end
       else
-         say("You lost.")
-         spr(5,p.x + 4, p.y + 4)
+         say("You lost. ")
+         local t = p.ticksSinceLost \ 10
+         local s = 5
+         if t % 2 == 1 and t < 10
+         then s = 1
+         end
+         spr(s,p.x + 4, p.y + 4)
+         p.ticksSinceLost += 1
       end
    end
 
@@ -265,6 +272,7 @@ function mkPlayer()
       if p.state == 0
       then
          p.state = 2
+         p.ticksSinceLost = 0
       end
    end
 
