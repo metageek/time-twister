@@ -1,6 +1,8 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
+--time twister
+--by metageek
 #include tt.lua
 function _init()
   level = 0
