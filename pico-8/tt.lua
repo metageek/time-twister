@@ -7,6 +7,7 @@ function setup()
   level += 1
   swarm = mkSwarm(1 + 2 * level)
   player = mkPlayer()
+  recordedPlayers = {}
 end
 
 function mkMove(dx, dy, count)
@@ -74,7 +75,7 @@ function mkRecordedPlayer(x0, y0, moves)
    p.draw = function()
       if p.visible()
       then
-         spr(3, p.x + 4, p.y + 4)
+         spr(3, p.x, p.y)
       end
    end
 
@@ -84,8 +85,6 @@ function mkRecordedPlayer(x0, y0, moves)
 
    return p
 end
-
-recordedPlayers = {}
 
 function mkPlayer()
    local p = rndSafePos(swarm.robots)
@@ -155,7 +154,7 @@ function mkPlayer()
          p.ticksSinceMove = 0
 
          p.runningTeleporting = true
-         p.teleportedFrom = { x = p.x+ 4, y = p.y + 4}
+         p.teleportedFrom = { x = p.x, y = p.y}
          p.runningTeleportFrames = 0
 
          local dest = rndSafePos(swarm.robots)
